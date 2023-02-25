@@ -1,24 +1,29 @@
 // TODO: Write code to define and export the Employee class
 
-const employee = class Employee {
+class Employee {
     constructor(name, id, email) {
         this.name = name;
         this.id = id;
         this.email = email;
     }
     getName() {
-        return this.name;
+        console.log(this.name);
     }
     getID() {
-        return this.id;
+        console.log(this.id);
     }
     getEmail() {
-        return this.email;
+        console.log(this.email);
     }
     getRole() {
-        return this.constuctor.name;
+        console.log(this.constructor.name);
     }
 
 }
 
-module.exports = employee
+const employee1 = new Employee('Jake', 2, 2)
+
+
+
+
+module.exports = Employee
