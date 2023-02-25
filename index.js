@@ -235,8 +235,8 @@ init();
 
 // Function to build page from page-template after all employees are added
 const buildPage = () => {
-    render(team)
-    writeToFile('index.html', )
+    const renderContent = render(team);
+    writeToFile('index.html', renderContent)
 
 
 }
