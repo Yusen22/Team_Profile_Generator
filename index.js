@@ -13,41 +13,50 @@ const render = require("./src/page-template.js");
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
-const questions = [
+const team = [];
+
+const emptyValidation = (value) => {
+    if (value === "") {
+        console.log("\nYou must enter a value")
+
+    }
+
+}
+
+const promptManagerQuestions = () => 
+inquirer
+        .prompt([
     {
         type: "input",
-        message: "Enter a title for the project",
-        name: "title",
+        message: "Enter the name of the manager",
+        name: "managerName",
         validate: (value) => {
             if (value === "") {
-                console.log("\nYou must have a project title (min. 3 characters)")
+                console.log("\nYou must enter a value")
             }
-            else if (value.length < 3) {
-                console.log("\nPlease enter a minimum of 3 characters for your project title.");
-            } else {
+            else {
+                return true
+            }
+        }
+
+    },
+    {
+        type: "input",
+        message: "Enter the manager's employee ID",
+        name: "managerID",
+        validate: (value) => {
+            if (value === "") {
+                console.log("\nYou must enter a value")
+            }
+            else {
                 return true
             }
         }
     },
     {
         type: "input",
-        message: "Provide a brief description of the project",
-        name: "description",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nYou must have a project description (min. 10 characters)")
-            }
-            else if (value.length < 10) {
-                console.log("\nPlease enter a minimum of 10 characters for your description.");
-            } else {
-                return true
-            }
-        }
-    },
-    {
-        type: "input",
-        message: "Instruct the user how to install the application",
-        name: "install",
+        message: "Enter the manager's email address",
+        name: "managerEmail",
         validate: (value) => {
             if (value === "") {
                 console.log("\nPlease enter a value (min. 10 characters) or 'N/A' to continue")
@@ -63,138 +72,140 @@ const questions = [
         }
     },
     {
-        type: "confirm",
-        message: "Do you want to add an screenshot of the application to the description?",
-        name: "screenshot",
-    },
-    {
         type: "input",
-        message: "Please enter the filepath of the screenshot you want to include (ensure the filepath is correct before entering)",
-        name: "shotpath",
-        when: (answers) => {
-            if (answers.screenshot === true) {
-                return true;
+        message: "Enter the manager's office number",
+        name: "managerOfficeNum",
+        validate: (value) => {
+            if (value === "") {
+                console.log("\nPlease enter a value (min. 10 characters) or 'N/A' to continue")
             }
+            else if (value.toUpperCase() === 'N/A') {
+                return true
+            }
+            else if (value.length < 10) {
+                console.log("\nPlease enter a minimum of 10 characters or type 'N/A' to continue.");
+            } else {
+                return true
+            }
+        }
+    }
+]).then((answers) => {
+
+    const newManager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNum);
+
+    team.push(newManager)
+
+    console.log(newManager);
+    promptNextEmployee()
+})
+
+
+
+// Function to prompt engineer questions and push answer to team array
+const promptEngineerQuestions = () => {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "Enter the name of the engineer",
+                name: "engName",
+                
+            },
+            {
+                type: "input",
+                message: "Enter the engineer's ID number",
+                name: "engID",
+
+            },
+            {
+                type: "input",
+                message: "Enter the engineer's email address",
+                name: "engEmail",
+            
+            },
+            {
+                type: "input",
+                message: "Enter the URL of the engineer's GitHub account",
+                name: "engGithub",
+                validate: (value) => {
+                    if (value === "") {
+                        console.log("\nPlease enter a value to continue")
+                    } else {
+                        return true
+                    }
+                }
+            },
+        ]).then(answers => {
+            console.log(answers)
+
+            const newEngineer = new Engineer(answers.engName, answers.engID, answers.engEmail, answers.engGithub)
+
+            team.push(newEngineer)
+
+            console.log(newEngineer);
+            promptNextEmployee()
+        })
+}
+
+// Add intern questions 
+const promptInternQuestions = () => {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Enter the name of the intern",
+            name: "intName"
         },
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value to continue")
-            } else {
-                return true
-            }
-        }
-    },
+        {
+            type: "input",
+            message: "Enter the intern's ID number",
+            name: "intID"
+        },
+        {
+            type: "input",
+            message: "Enter the intern's email address",
+            name: "intEmail"
 
-    {
-        type: "input",
-        message: "Instruct the user on how to use the application.",
-        name: "usage",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value (min. 10 characters) or 'N/A' to continue")
-            }
-            else if (value.toUpperCase() === 'N/A') {
-                return true
-            }
-            else if (value.length < 10) {
-                console.log("\nPlease enter a minimum of 10 characters or type 'N/A' to continue.");
-            } else {
-                return true
-            }
+        },
+        {
+            type: "input",
+            message: "Enter the URL of the intern's GitHub account",
+            name: "intSchool"
         }
-    },
-    {
-        type: "input",
-        message: "List contributors to the project.",
-        name: "contributors",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value (min. 3 characters) or 'N/A' to continue")
-            }
-            else if (value.toUpperCase() === 'N/A') {
-                return true
-            }
-            else if (value.length < 3) {
-                console.log("\nPlease enter a minimum of 3 characters or type 'N/A' to continue.");
-            } else {
-                return true
-            }
-        }
+    ]).then(answers => {
+        console.log(answers)
 
-    },
-    {
-        type: "input",
-        message: "Instruct the user on how to test the application.",
-        name: "tests",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value (min. 10 characters) or 'N/A' to continue")
-            }
-            else if (value.toUpperCase() === 'N/A') {
-                return true
-            }
-            else if (value.length < 10) {
-                console.log("\nPlease enter a minimum of 10 characters or type 'N/A' to continue.");
-            } else {
-                return true
-            }
-        }
-    },
-    {
-        type: "input",
-        message: "What is your Github username?",
-        name: "github",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value (min. 3 characters) or 'N/A' to continue")
-            }
-            else if (value.toUpperCase() === 'N/A') {
-                return true
-            }
-            else if (value.length < 3) {
-                console.log("\nPlease enter a minimum of 3 characters or type 'N/A' to continue.");
-            } else {
-                return true
-            }
-        }
-    },
-    {
-        type: "input",
-        message: "What is your email address?",
-        name: "email",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value (min. 3 characters) or 'N/A' to continue")
-            }
-            else if (value.toUpperCase() === 'N/A') {
-                return true
-            }
-            else if (value.length < 3) {
-                console.log("\nPlease enter a minimum of 3 characters or type 'N/A' to continue.");
-            } else {
-                return true
-            }
-        }
-    },
-    {
-        type: "list",
-        message: "Select a licence for this project.",
-        choices: [
-            'Apache license 2.0',
-            'BSD 2-clause "Simplified" license',
-            'BSD 3-clause "New" or "Revised" license',
-            'GNU General Public License v2.0',
-            'GNU General Public License v3.0',
-            'GNU Lesser General Public License v2.1',
-            'GNU Lesser General Public License v3.0',
-            'ISC',
-            'MIT',
-            'The Unlicense',
-        ],
-        name: 'licence'
-    },
+        const newIntern = new Engineer(answers.intName, answers.intID, answers.intEmail, answers.intSchool)
 
-]
+        team.push(newIntern)
+
+        console.log(newIntern);
+        promptNextEmployee()
+    })
+}
+
+const promptNextEmployee = () => {
+    inquirer
+        .prompt({
+            type: "list",
+            message: "Do you want to...",
+            choices: [
+                'Add an engineer',
+                'Add an intern',
+                'Finish building the team',
+            ],
+            name: 'teamOptions'
+        })
+        .then(response => {
+            // console.log(response.teamOptions)
+            if (response.teamOptions === 'Add an engineer') {
+                promptEngineerQuestions()
+            } else if (response.teamOptions === 'Add an intern') {
+                promptInternQuestions()
+            } else {
+                buildPage()
+            }
+        })
+}
 
 
 
@@ -202,7 +213,7 @@ const questions = [
 // function to write README file
 
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, err => err ? console.error(err) : console.log("README successfully written to the current working directory!"));
+    fs.writeFile(fileName, data, err => err ? console.error(err) : console.log("Your team has been generated! Look inside your current working directory."));
 
     console.log(fileName);
     console.log(data);
@@ -212,17 +223,23 @@ function writeToFile(fileName, data) {
 // function to initialize program
 
 function init() {
-    console.log("Welcome to the professional README generator!\n\nPlease complete the questions below to generate your README.\n\nNOTE: Enter 'N/A' on a question if the section is not relevant to your project.\n")
-    inquirer
-        .prompt(questions)
-        .then((answers) => {
-            console.log(answers);
-            writeToFile('README.md', generateMarkdown(answers))
-        })
+    console.log("\n\nWelcome to the Team Profile Generator !\n\nLet's start to build your team...\n\nFirst up is the manager...\n\n");
+    
+    promptManagerQuestions()
+        
 }
 
 // function call to initialize program
 init();
 
-module.exports = questions
+
+// Function to build page from page-template after all employees are added
+const buildPage = () => {
+    render(team)
+    writeToFile('index.html', )
+
+
+}
+
+module.exports = team
 
