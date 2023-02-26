@@ -37,14 +37,15 @@ const promptManagerQuestions = () =>
 
             },
             {
-                type: "number",
+                type: "input",
                 message: "Enter the manager's employee ID",
                 name: "managerID",
                 validate: (value) => {
-                    var valid = Number.isInteger(value)
+                    var valid = Number.isInteger(parseInt(value))
                     if(valid === false) {
                         console.log(`\nPlease enter a valid whole number`)
-                    } else {
+                        return false
+                    } else if(valid === true) {
                        return true
                     }
                     
@@ -64,16 +65,18 @@ const promptManagerQuestions = () =>
                 }
             },
             {
-                type: "number",
+                type: "input",
                 message: "Enter the manager's office number",
                 name: "managerOfficeNum",
                 validate: (value) => {
-                    var valid = Number.isInteger(value)
+                    var valid = Number.isInteger(parseInt(value))
                     if(valid === false) {
                         console.log(`\nPlease enter a valid whole number`)
-                    } else {
-                        return true
+                        return false
+                    } else if(valid === true) {
+                       return true
                     }
+                    
                 }
             }
         ]).then((answers) => {
@@ -102,19 +105,19 @@ const promptEngineerQuestions = () => {
 
             },
             {
-                type: "number",
+                type: "input",
                 message: "Enter the engineer's ID number",
                 name: "engID",
                 validate: (value) => {
-                    var valid = Number.isInteger(value)
+                    var valid = Number.isInteger(parseInt(value))
                     if(valid === false) {
                         console.log(`\nPlease enter a valid whole number`)
-                    } else {
+                        return false
+                    } else if(valid === true) {
                        return true
                     }
                     
                 }
-
 
 
             },
@@ -137,7 +140,7 @@ const promptEngineerQuestions = () => {
                 message: "Enter the URL of the engineer's GitHub account",
                 name: "engGithub",
                 validate: (value) => {
-                    const gitHubURL = 'https://github.com'
+                    const gitHubURL = 'https://github.com/'
 
 
                     if (!value.includes(gitHubURL)) {
@@ -173,14 +176,15 @@ const promptInternQuestions = () => {
                 }
             },
             {
-                type: "number",
+                type: "input",
                 message: "Enter the intern's ID number",
                 name: "intID",
                 validate: (value) => {
-                    var valid = Number.isInteger(value)
+                    var valid = Number.isInteger(parseInt(value))
                     if(valid === false) {
                         console.log(`\nPlease enter a valid whole number`)
-                    } else {
+                        return false
+                    } else if(valid === true) {
                        return true
                     }
                     
