@@ -38,7 +38,7 @@ Now, select an option from the list to create an engineer or intern profile, or 
 The outputted `html` file will be generated in the `Team_Profile_Generator/output/` folder.
 
 
-![Screenshot of application](../Team_Profile_Generator/assets/Screenshot_20230226_141533.png)
+![Screenshot of application](./assets/Screenshot_20230226_141533.png)
 
 
 
