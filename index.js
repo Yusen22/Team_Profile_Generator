@@ -18,86 +18,73 @@ const team = [];
 const emptyValidation = (value) => {
     if (value === "") {
         console.log("\nYou must enter a value")
-
+    } else if (value.length > 1) {
+        return true
     }
 
 }
 
-const promptManagerQuestions = () => 
-inquirer
+const promptManagerQuestions = () =>
+    inquirer
         .prompt([
-    {
-        type: "input",
-        message: "Enter the name of the manager",
-        name: "managerName",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nYou must enter a value")
-            }
-            else {
-                return true
-            }
-        }
+            {
+                type: "input",
+                message: "Enter the name of the manager",
+                name: "managerName",
+                validate: (value) => {
+                    return emptyValidation(value);
+                }
 
-    },
-    {
-        type: "input",
-        message: "Enter the manager's employee ID",
-        name: "managerID",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nYou must enter a value")
+            },
+            {
+                type: "number",
+                message: "Enter the manager's employee ID",
+                name: "managerID",
+                validate: (value) => {
+                    var valid = Number.isInteger(value)
+                    if(valid === false) {
+                        console.log(`\nPlease enter a valid whole number`)
+                    } else {
+                        return true
+                    }
+                    // return valid || `Please enter a valid whole number`
+                }
+            },
+            {
+                type: "input",
+                message: "Enter the manager's email address",
+                name: "managerEmail",
+                validate: (value) => {
+                    if (!value.includes('@')) {
+                        console.log(`\nThis is not a valid email address.`)
+                        return false
+                    } else {
+                        return emptyValidation(value);
+                    }
+                }
+            },
+            {
+                type: "number",
+                message: "Enter the manager's office number",
+                name: "managerOfficeNum",
+                validate: (value) => {
+                    var valid = Number.isInteger(value)
+                    if(valid === false) {
+                        console.log(`\nPlease enter a valid whole number`)
+                    } else {
+                        return true
+                    }
+                }
             }
-            else {
-                return true
-            }
-        }
-    },
-    {
-        type: "input",
-        message: "Enter the manager's email address",
-        name: "managerEmail",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value (min. 10 characters) or 'N/A' to continue")
-            }
-            else if (value.toUpperCase() === 'N/A') {
-                return true
-            }
-            else if (value.length < 10) {
-                console.log("\nPlease enter a minimum of 10 characters or type 'N/A' to continue.");
-            } else {
-                return true
-            }
-        }
-    },
-    {
-        type: "input",
-        message: "Enter the manager's office number",
-        name: "managerOfficeNum",
-        validate: (value) => {
-            if (value === "") {
-                console.log("\nPlease enter a value (min. 10 characters) or 'N/A' to continue")
-            }
-            else if (value.toUpperCase() === 'N/A') {
-                return true
-            }
-            else if (value.length < 10) {
-                console.log("\nPlease enter a minimum of 10 characters or type 'N/A' to continue.");
-            } else {
-                return true
-            }
-        }
-    }
-]).then((answers) => {
+        ]).then((answers) => {
 
-    const newManager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNum);
+            const newManager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNum);
 
-    team.push(newManager)
+            team.push(newManager)
 
-    console.log(newManager);
-    promptNextEmployee()
-})
+            console.log(newManager);
+            promptNextEmployee()
+        })
 
 
 
@@ -109,29 +96,50 @@ const promptEngineerQuestions = () => {
                 type: "input",
                 message: "Enter the name of the engineer",
                 name: "engName",
-                
+                validate: (value) => {
+                    return emptyValidation(value);
+                }
+
             },
             {
-                type: "input",
+                type: "number",
                 message: "Enter the engineer's ID number",
                 name: "engID",
+                validate: (value) => {
+                    return emptyValidation(value);
+                }
+
+
+
 
             },
             {
                 type: "input",
                 message: "Enter the engineer's email address",
                 name: "engEmail",
-            
+                validate: (value) => {
+                    if (!value.includes('@')) {
+                        console.log(`This is not a valid email address.`)
+                        return false
+                    } else {
+                        return emptyValidation(value);
+                    }
+                }
+
             },
             {
                 type: "input",
                 message: "Enter the URL of the engineer's GitHub account",
                 name: "engGithub",
                 validate: (value) => {
-                    if (value === "") {
-                        console.log("\nPlease enter a value to continue")
+                    const gitHubURL = 'https://github.com'
+
+
+                    if (!value.includes(gitHubURL)) {
+                        console.log(`This is not a valid Github account. It should start with '${gitHubURL}'.`)
+                        return false
                     } else {
-                        return true
+                        return emptyValidation(value);
                     }
                 }
             },
@@ -149,40 +157,61 @@ const promptEngineerQuestions = () => {
 
 // Add intern questions 
 const promptInternQuestions = () => {
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "Enter the name of the intern",
-            name: "intName"
-        },
-        {
-            type: "input",
-            message: "Enter the intern's ID number",
-            name: "intID"
-        },
-        {
-            type: "input",
-            message: "Enter the intern's email address",
-            name: "intEmail"
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "Enter the name of the intern",
+                name: "intName",
+                validate: (value) => {
+                    return emptyValidation(value);
+                }
+            },
+            {
+                type: "number",
+                message: "Enter the intern's ID number",
+                name: "intID",
+                validate: (value) => {
+                    return emptyValidation(value);
+                }
 
-        },
-        {
-            type: "input",
-            message: "Enter the URL of the intern's GitHub account",
-            name: "intSchool"
-        }
-    ]).then(answers => {
-        console.log(answers)
+            },
+            {
+                type: "input",
+                message: "Enter the intern's email address",
+                name: "intEmail",
+                validate: (value) => {
+                    if (!value.includes('@')) {
+                        console.log(`This is not a valid email address.`)
+                        return false
+                    } else {
+                        return emptyValidation(value);
+                    }
+                }
 
-        const newIntern = new Engineer(answers.intName, answers.intID, answers.intEmail, answers.intSchool)
+            },
+            {
+                type: "input",
+                message: "Enter the URL of the intern's GitHub account",
+                name: "intSchool",
+                validate: (value) => {
+                    return emptyValidation(value);
+                }
 
-        team.push(newIntern)
+            }
+        ]).then(answers => {
+            console.log(answers)
 
-        console.log(newIntern);
-        promptNextEmployee()
-    })
+            const newIntern = new Intern(answers.intName, answers.intID, answers.intEmail, answers.intSchool)
+
+            team.push(newIntern)
+
+            console.log(newIntern);
+            promptNextEmployee()
+        })
 }
 
+// A function to prompt next employee when one employee is completed
 const promptNextEmployee = () => {
     inquirer
         .prompt({
@@ -224,9 +253,9 @@ function writeToFile(fileName, data) {
 
 function init() {
     console.log("\n\nWelcome to the Team Profile Generator !\n\nLet's start to build your team...\n\nFirst up is the manager...\n\n");
-    
+
     promptManagerQuestions()
-        
+
 }
 
 // function call to initialize program
@@ -236,7 +265,7 @@ init();
 // Function to build page from page-template after all employees are added
 const buildPage = () => {
     const renderContent = render(team);
-    writeToFile('index.html', renderContent)
+    writeToFile(outputPath, renderContent)
 
 
 }
