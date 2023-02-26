@@ -45,9 +45,9 @@ const promptManagerQuestions = () =>
                     if(valid === false) {
                         console.log(`\nPlease enter a valid whole number`)
                     } else {
-                        return true
+                       return true
                     }
-                    // return valid || `Please enter a valid whole number`
+                    
                 }
             },
             {
@@ -106,9 +106,14 @@ const promptEngineerQuestions = () => {
                 message: "Enter the engineer's ID number",
                 name: "engID",
                 validate: (value) => {
-                    return emptyValidation(value);
+                    var valid = Number.isInteger(value)
+                    if(valid === false) {
+                        console.log(`\nPlease enter a valid whole number`)
+                    } else {
+                       return true
+                    }
+                    
                 }
-
 
 
 
@@ -119,7 +124,7 @@ const promptEngineerQuestions = () => {
                 name: "engEmail",
                 validate: (value) => {
                     if (!value.includes('@')) {
-                        console.log(`This is not a valid email address.`)
+                        console.log(`\nThis is not a valid email address.`)
                         return false
                     } else {
                         return emptyValidation(value);
@@ -136,7 +141,7 @@ const promptEngineerQuestions = () => {
 
 
                     if (!value.includes(gitHubURL)) {
-                        console.log(`This is not a valid Github account. It should start with '${gitHubURL}'.`)
+                        console.log(`\nThis is not a valid Github account. It should start with '${gitHubURL}'.`)
                         return false
                     } else {
                         return emptyValidation(value);
@@ -172,7 +177,13 @@ const promptInternQuestions = () => {
                 message: "Enter the intern's ID number",
                 name: "intID",
                 validate: (value) => {
-                    return emptyValidation(value);
+                    var valid = Number.isInteger(value)
+                    if(valid === false) {
+                        console.log(`\nPlease enter a valid whole number`)
+                    } else {
+                       return true
+                    }
+                    
                 }
 
             },
@@ -182,7 +193,7 @@ const promptInternQuestions = () => {
                 name: "intEmail",
                 validate: (value) => {
                     if (!value.includes('@')) {
-                        console.log(`This is not a valid email address.`)
+                        console.log(`\nThis is not a valid email address.`)
                         return false
                     } else {
                         return emptyValidation(value);
@@ -192,7 +203,7 @@ const promptInternQuestions = () => {
             },
             {
                 type: "input",
-                message: "Enter the URL of the intern's GitHub account",
+                message: "Enter the intern's university or college",
                 name: "intSchool",
                 validate: (value) => {
                     return emptyValidation(value);
