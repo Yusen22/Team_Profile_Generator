@@ -97,7 +97,7 @@ module.exports = team => {
     <script src="https://kit.fontawesome.com/c502137733.js"></script>
     <style>
         .employee-card {
-            min-width: 18rem !important;
+            min-width: 21rem !important;
             margin: 20px 15px;
             box-shadow: 0 3px 10px rgb(95, 95, 95);
         }
