@@ -106,6 +106,10 @@ module.exports = team => {
             background-color: cornflowerblue !important;
         }
 
+        .card-header h2 {
+            color: white !important;
+        }
+
         .team-heading {
             background-color: coral !important;
         }
@@ -122,7 +126,7 @@ module.exports = team => {
     </div>
     <div class="container">
         <div class="row">
-            <div class="team-area col-5 d-flex flex-wrap justify-content-center">
+            <div class="team-area col-12 d-flex flex-wrap justify-content-center">
                 ${generateTeam(team)}
             </div>
         </div>
