@@ -257,7 +257,7 @@ const promptNextEmployee = () => {
 // function to write README file
 
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, err => err ? console.error(err) : console.log("Your team has been generated! Look inside your current working directory."));
+    fs.writeFile(fileName, data, err => err ? console.error(err) : console.log("Your team has been generated in the 'team.html' document!"));
 
     console.log(fileName);
     console.log(data);
