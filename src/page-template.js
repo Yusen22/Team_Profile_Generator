@@ -95,6 +95,21 @@ module.exports = team => {
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/c502137733.js"></script>
+    <style>
+        .employee-card {
+            min-width: 18rem !important;
+            margin: 20px 15px;
+            box-shadow: 0 3px 10px rgb(95, 95, 95);
+        }
+
+        .card-header {
+            background-color: cornflowerblue !important;
+        }
+
+        .team-heading {
+            background-color: coral !important;
+        }
+    </style>
 </head>
 
 <body>
